@@ -1,4 +1,4 @@
-import data_manager
+# import data_manager
 # This function needs to print outputs like this:
 # /-----------------------------------\
 # |   id   |      title     |  type   |
@@ -18,10 +18,21 @@ def print_table(table, title_list):
 
     pass
 # list_p = data_manager.get_table_from_file("items.csv")
-# for k, v in enumerate(list_p)
-# print(max(len(x) for x in list_p[0]))
-# for k in list_p:
-#     print(k)
+# # # for i in list_p:
+# # #     for k in i:
+# # #         print(k)
+# count = 0
+# max_list = []
+# max_str = 0
+# for k, v in enumerate(list_p):
+#     if count < len(list_p[k]):
+#         max_list.append(max([len(x[count]) for x in list_p]))
+#     max_str += max_list[0]
+#     count += 1
+# print(max_list)
+
+# title = ['a', 'b', 'c']
+# print(len(title))
 # print_table(list_p, "de,de,de")
 
 # This function needs to print result of the special functions

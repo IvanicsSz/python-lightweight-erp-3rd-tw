@@ -11,12 +11,20 @@
 # @table: list of lists - the table to print out
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
-    # max_len =max([])
+    count = 0
+    max_list = []
+    # max_title = [len(x) for x in title_list]
+    max_str = 0
+    for k, v in enumerate(list_p):
+        if count < len(list_p[k]):
+            max_list.append(max([len(x[count]) for x in list_p]))
+        count += 1
+    max_table = [max(x[0], x[1]) for x in list(zip([len(x) for x in title_list], max_list))]
+    for i in max_table:
+        max_str += i
+    print("/{0:->{1}}".format("", max_str), end="\\\n")
 
-    print(list_p)
-    # write_table_to_file("test", list_p)
 
-    pass
 # list_p = data_manager.get_table_from_file("items.csv")
 # # # for i in list_p:
 # # #     for k in i:
@@ -27,13 +35,18 @@ def print_table(table, title_list):
 # for k, v in enumerate(list_p):
 #     if count < len(list_p[k]):
 #         max_list.append(max([len(x[count]) for x in list_p]))
-#     max_str += max_list[0]
+#         # max_str += max_list[count]
 #     count += 1
-# print(max_list)
+# title = ["aaaaaa", "bb", "c", "dddddd", "23", "eded"]
+#
+# max_title = [len(x) for x in title]
+# print(list(zip(max_title, max_list)))
+# print(max_list, " ", max_str, " ", max_title)
+# maxi = [max(x[0], x[1]) for x in list(zip([len(x) for x in title], max_list))]
+# for i in maxi:
+#     max_str += i
+# print(maxi, " ", max_str)
 
-# title = ['a', 'b', 'c']
-# print(len(title))
-# print_table(list_p, "de,de,de")
 
 # This function needs to print result of the special functions
 #
@@ -51,9 +64,7 @@ def print_result(result, label):
     if type(result) is dict:
         for key in result:
             print("key: {0}; values:{1}".format(key, result[key]))
-    # your code
-
-    pass
+    
 
 
 # This function needs to generate outputs like this:

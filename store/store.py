@@ -36,9 +36,10 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    print("hello add\n\n\n\n")
-
-    # your code
+    new_id = common.generate_random(table)
+    new_record = ui.get_inputs(["Title: ", "Manufacturer: ", "Price: ", "Copies in stock: "], "")
+    new_record.insert(0, new_id)
+    table.append(new_record)
 
     return table
 
@@ -88,13 +89,14 @@ def get_average_by_manufacturer(table, manufacturer):
 
 
 def choose():
-    table = data_manager.get_table_from_file("store/games.csv")
+    file_name = "store/games.csv"
+    table = data_manager.get_table_from_file(file_name)
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
         show_table(table)
     elif option == "2":
-        add(table)
+        data_manager.write_table_to_file(file_name, add(table))
     elif option == "3":
         remove(table, "placeholder")
     elif option == "4":

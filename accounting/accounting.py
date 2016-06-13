@@ -92,13 +92,12 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    title = "Adding new record to accounting table"
     list_labels = ["Month",
                    "Day",
                    "Year",
                    "Type",
                    "Amount (dollar)"]
-    record = ui.get_inputs(list_labels, title)
+    record = ui.get_inputs(list_labels, "Adding new record to accounting table")
     record.insert(0, common.generate_random(table))
     table.append(record)
     data_manager.write_table_to_file("accounting/items.csv", table)
@@ -121,13 +120,12 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    title = "Updating record in accounting table"
     list_labels = ["Month",
                    "Day",
                    "Year",
                    "Type",
                    "Amount (dollar)"]
-    record = ui.get_inputs(list_labels, title)
+    record = ui.get_inputs(list_labels, "Updating record in accounting table")
     record.insert(0, id_)
     table[table.index([x for x in table if x[0] == id_][0])] = record
     data_manager.write_table_to_file("accounting/items.csv", table)
@@ -153,7 +151,7 @@ def which_year_max(table):
     for i in list(set(x[3] for x in table)):
         profit_list.append([sum_profit(table, i), i])
     result = [x[1] for x in profit_list if x[0] == max([x[0] for x in profit_list])][0]
-    ui.print_result(result, "The year which had most in and outcome profit")
+    ui.print_result(result, "The year which had most profit")
     return result
 
 

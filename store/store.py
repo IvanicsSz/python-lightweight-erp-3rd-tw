@@ -23,11 +23,13 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 #
 # @table: list of lists
 def show_table(table):
-    print("hello show table\n\n\n\n")
+    title_list = ["ID",
+                  "Title",
+                  "Manufacturer",
+                  "Price",
+                  "Copies in stock"]
 
-    # your code
-
-    pass
+    ui.print_table(table, title_list)
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
@@ -86,21 +88,21 @@ def get_average_by_manufacturer(table, manufacturer):
 
 
 def choose():
-    table_name = "store/games.csv"
+    table = data_manager.get_table_from_file("store/games.csv")
     inputs = ui.get_inputs(["Please enter a number: "], "")
     option = inputs[0]
     if option == "1":
-        show_table(table_name)
+        show_table(table)
     elif option == "2":
-        add(table_name)
+        add(table)
     elif option == "3":
-        remove(table_name, "placeholder")
+        remove(table, "placeholder")
     elif option == "4":
-        update(table_name, "placeholder")
+        update(table, "placeholder")
     elif option == "5":
-        get_counts_by_manufacturers(table_name)
+        get_counts_by_manufacturers(table)
     elif option == "6":
-        get_average_by_manufacturer(table_name, "placeholder")
+        get_average_by_manufacturer(table, "placeholder")
     elif option == "0":
         return "stop"
     else:

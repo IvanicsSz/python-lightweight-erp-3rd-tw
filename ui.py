@@ -1,5 +1,4 @@
-
-
+# import data_manager
 # This function needs to print outputs like this:
 # /-----------------------------------\
 # |   id   |      title     |  type   |
@@ -12,18 +11,46 @@
 # @table: list of lists - the table to print out
 # @title_list: list of strings - the head of the table
 def print_table(table, title_list):
+    # max_len =max([])
 
-    # your code
+    print(list_p)
+    # write_table_to_file("test", list_p)
 
     pass
+# list_p = data_manager.get_table_from_file("items.csv")
+# # # for i in list_p:
+# # #     for k in i:
+# # #         print(k)
+# count = 0
+# max_list = []
+# max_str = 0
+# for k, v in enumerate(list_p):
+#     if count < len(list_p[k]):
+#         max_list.append(max([len(x[count]) for x in list_p]))
+#     max_str += max_list[0]
+#     count += 1
+# print(max_list)
 
+# title = ['a', 'b', 'c']
+# print(len(title))
+# print_table(list_p, "de,de,de")
 
 # This function needs to print result of the special functions
 #
 # @result: string or list or dictionary - result of the special function
 # @label: string - label of the result
 def print_result(result, label):
+    print(label)
+    if type(result) is str:
+        print(result)
 
+    if type(result) is list:
+        for i in result:
+            print(i, sep=", ")
+
+    if type(result) is dict:
+        for key in result:
+            print("key: {0}; values:{1}".format(key, result[key]))
     # your code
 
     pass
@@ -43,10 +70,12 @@ def print_result(result, label):
 # @list_options: list of strings - the options in the menu
 # @exit_message: string - the last option with (0) (example: "Back to main menu")
 def print_menu(title, list_options, exit_message):
-
-    # your code
-
-    pass
+    print("{0}:".format(title))
+    count = 1
+    for i in list_options:
+        print("({0}) {1}".format(count, i))
+        count += 1
+    print("(0) {0}".format(exit_message))
 
 
 # This function gets a list of inputs from the user by the terminal
@@ -56,9 +85,8 @@ def print_menu(title, list_options, exit_message):
 # @inputs: list of string - list of the received values from the user
 def get_inputs(list_labels, title):
     inputs = []
-
-    # your code
-
+    print("{0}:".format(title))
+    inputs = [input(i) for i in list_labels]
     return inputs
 
 
@@ -66,7 +94,4 @@ def get_inputs(list_labels, title):
 #
 # @message: string - the error message
 def print_error_message(message):
-
-    # your code
-
-    pass
+    print("Error: {0}".format(message))

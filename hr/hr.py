@@ -38,11 +38,21 @@ def choose():
     if option == "1" or option == "3" or option == "4":
         show_table(table)
         if option == "3":
-            id_ = ui.get_inputs(["ID to be removed:"])
-            remove(table, id_[0])
+            id_ = ""
+            while id_ not in [line[0] for line in table] and id_ != "0":
+                if id_ != "":
+                    ui.print_error_message("ID given does not exist")
+                id_ = ui.get_inputs(["ID to be removed or 0 to exit:"])[0]
+            if id_ != 0:
+                remove(table, id_)
         if option == "4":
-            id_ = ui.get_inputs(["ID to be updated:"])
-            update(table, id_[0])
+            id_ = ""
+            while id_ not in [line[0] for line in table] and id_ != "0":
+                if id_ != "":
+                    ui.print_error_message("ID given does not exist")
+                id_ = ui.get_inputs(["ID to be updated or 0 to exit:"])[0]
+            if id_ != 0:
+                update(table, id_[0])
     elif option == "2":
         add(table)
     elif option == "5":
@@ -78,12 +88,17 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    list_labels = ["Enter name:", "Enter date of birth:"]
+    list_labels = [["Enter name:"], ["Enter date of birth:"]]
     new_id_ = common.generate_random(table)
-    new_employee_data = ui.get_inputs(list_labels)
-    new_employee_data.insert(0, new_id_)
-    table.append(new_employee_data)
-    data_manager.write_table_to_file("hr/persons.csv", table)
+    new_employee_data = []
+    for entry in list_labels:
+        new_employee_data.append(ui.get_inputs(entry)[0])
+        if "0" in new_employee_data:
+            break
+    if "0" not in new_employee_data:
+        new_employee_data.insert(0, new_id_)
+        table.append(new_employee_data)
+        data_manager.write_table_to_file("hr/persons.csv", table)
     return table
 
 

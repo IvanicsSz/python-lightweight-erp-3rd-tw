@@ -79,7 +79,7 @@ def print_menu(title, list_options, exit_message):
 # @list_labels: list of strings - the labels of the inputs
 # @title: string - title of the "input section"
 # @inputs: list of string - list of the received values from the user
-def get_inputs(list_labels, title):
+def get_inputs(list_labels, title=""):
     inputs = []
     print("{0}:".format(title))
     inputs = [input(i) for i in list_labels]

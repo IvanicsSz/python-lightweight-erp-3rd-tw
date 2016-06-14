@@ -62,7 +62,7 @@ def choose():
     elif option == "2":
         add(table)
     elif option == "5":
-        get_lowest_price_item_id(table)
+        ui.print_result(get_lowest_price_item_id(table), "ID of the lowest priced item is: ")
     elif option == "6":
         year = ui.get_inputs(["Please insert the initial month",
                               "Please insert the initial day",
@@ -121,7 +121,7 @@ def update(table, id_):
 # return type: string (id)
 # if there are more than one with the lowest price, return the first of descending alphabetical order
 def get_lowest_price_item_id(table):
-    pass
+    return common.sorting(list(reversed(common.sorting(table, 0))), 2)[0][0]
 
 
 # the question: Which items are sold between two given dates ? (from_date < birth_date < to_date)

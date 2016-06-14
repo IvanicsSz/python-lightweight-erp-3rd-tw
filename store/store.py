@@ -40,6 +40,7 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
+
     return common.removing(table, id_)
 
 
@@ -49,10 +50,9 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    print("hello update\n\n\n\n")
-    # your code
+    update_data = ui.get_inputs(["Title: ", "Manufacturer: ", "Price: ", "Copies in stock: "], "")
 
-    return table
+    return common.updating(table, id_, update_data)
 
 
 # special functions:
@@ -70,10 +70,9 @@ def get_counts_by_manufacturers(table):
 # the question: What is the average amount of games in stock of a given manufacturer?
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
-    print("hello get average by manufacturer\n\n\n\n")
-    # your code
+    in_stock = 0
 
-    pass
+    return in_stock
 
 
 def choose():
@@ -86,15 +85,16 @@ def choose():
     elif option == "2":
         data_manager.write_table_to_file(file_name, add(table))
     elif option == "3":
-        remove_id = ui.get_inputs(["Enter the ID of the record to be removed: "], "")
+        remove_id = ui.get_inputs(["Enter the ID of the record to be removed: "], "")[0]
         data_manager.write_table_to_file(file_name, remove(table, remove_id))
     elif option == "4":
-        update_id = ui.get_inputs(["Enter the ID of the record to be updated: "], "")
+        update_id = ui.get_inputs(["Enter the ID of the record to be updated: "], "")[0]
         data_manager.write_table_to_file(file_name, update(table, update_id))
     elif option == "5":
         get_counts_by_manufacturers(table)
     elif option == "6":
-        get_average_by_manufacturer(table, "placeholder")
+        manuf = ui.get_inputs(["Enter a manufacturer: "], "")[0]
+        get_average_by_manufacturer(table, manuf)
     elif option == "0":
         return "stop"
     else:

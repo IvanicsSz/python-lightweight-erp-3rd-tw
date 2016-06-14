@@ -47,6 +47,12 @@ def adding(table, add_list):
     return table
 
 
+def summing(sum_list):
+    summa = 0
+    for i in sum_list:
+        summa += i
+    return summa
+
 
 # table = data_manager.get_table_from_file("items.csv")
-# list_add = [10, 23, 2016, "out", 40]
+# list_add = [10, 23, 2016, 22, 40]

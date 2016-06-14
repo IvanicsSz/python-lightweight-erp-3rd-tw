@@ -36,11 +36,7 @@ def sorting(list_sort, index=""):
 
 def removing(table, _id):
     """an id defined item remove from list """
-    index = [k for k, v in enumerate(table) if v[0] == _id]
-    if index:
-        del table[index[0]]
-        return table
-    return table
+    return [x for x in table if x[0] != _id]
 
 
 def adding(table, add_list):

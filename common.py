@@ -1,5 +1,4 @@
 # implement commonly used functions here
-import data_manager
 import string
 import random
 
@@ -54,11 +53,13 @@ def adding(table, add_list):
 
 
 def updating(table, _id, update_list):
-    # index = [k for k, v in enumerate(table) if v[0] == _id]
-    #
-    # table.append()
-    # del table[index[0]]
-    pass
+    index = [k for k, v in enumerate(table) if v[0] == _id]
+    _id = _id.split() + update_list
+    if index:
+        table.append(_id)
+        del table[index[0]]
+        return table
+    return table
 
 
 def summing(sum_list):
@@ -66,8 +67,3 @@ def summing(sum_list):
     for i in sum_list:
         summa += i
     return summa
-
-
-# table = data_manager.get_table_from_file("items.csv")
-# list_add = [10, 23, 2016, 22, 40]
-# print(adding(table, list_add))

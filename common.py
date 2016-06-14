@@ -1,5 +1,5 @@
 # implement commonly used functions here
-# import data_manager
+import data_manager
 import string
 import random
 
@@ -32,19 +32,33 @@ def sorting(list_sort):
 
 def removing(table, _id):
     """an id defined item remove from list """
-    table_list = [v for k, v in enumerate(table)]
     index = [k for k, v in enumerate(table) if v[0] == _id]
-    del table_list[index[0]]
-    return table_list
+    if index:
+        del table[index[0]]
+        return table
+    return table
 
 
 def adding(table, add_list):
     """ ad new id element to a list"""
     _id = [generate_random(table)]
-    for i in list_add:
+    for i in add_list:
         _id.append(i)
-    table.append(_id)
+    while len(table[0]) > len(_id):
+        _id.append("None")
+    while len(table[0]) < len(_id):
+        _id.pop()
+    if len(table[0]) == len(_id):
+        table.append(_id)
     return table
+
+
+def updating(table, _id, update_list):
+    # index = [k for k, v in enumerate(table) if v[0] == _id]
+    #
+    # table.append()
+    # del table[index[0]]
+    pass
 
 
 def summing(sum_list):
@@ -56,3 +70,4 @@ def summing(sum_list):
 
 # table = data_manager.get_table_from_file("items.csv")
 # list_add = [10, 23, 2016, 22, 40]
+# print(adding(table, list_add))

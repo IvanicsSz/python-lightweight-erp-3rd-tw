@@ -57,16 +57,16 @@ def choose():
         if option == "3":
             id_ = ui.get_inputs(["Please select the record to delete: "])[0]
             remove(table, id_)
-        if option == "4":
+        elif option == "4":
             id_ = ui.get_inputs(["Please select the record to update: "])[0]
             update(table, id_)
     elif option == "2":
         add(table)
     elif option == "5":
-        which_year_max(table)
+        ui.print_result(str(which_year_max(table)), "The year with most profit is: ")
     elif option == "6":
-        year = ui.get_inputs(["Please insert the year"])[0]
-        avg_amount(table, int(year))
+        year = ui.get_inputs(["Please insert the year: "])[0]
+        ui.print_result(str(avg_amount(table, int(year))), "Average profit per item in given year: ")
     elif option == "0":
         back_to_main = 1
     else:

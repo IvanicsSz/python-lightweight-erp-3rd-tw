@@ -1,4 +1,3 @@
-# import data_manager
 # This function needs to print outputs like this:
 # /-----------------------------------\
 # |   id   |      title     |  type   |
@@ -7,45 +6,30 @@
 # |--------|----------------|---------|
 # |   1    |       fo       |    fps  |
 # \-----------------------------------/
-#
 # @table: list of lists - the table to print out
 # @title_list: list of strings - the head of the table
+
+
 def print_table(table, title_list):
-    count = 0
-    max_list = []
-    # max_title = [len(x) for x in title_list]
     max_str = 0
-    for k, v in enumerate(list_p):
-        if count < len(list_p[k]):
-            max_list.append(max([len(x[count]) for x in list_p]))
-        count += 1
-    max_table = [max(x[0], x[1]) for x in list(zip([len(x) for x in title_list], max_list))]
-    for i in max_table:
+    table.insert(0, title_list)
+    max_width_per_column = [max(y) for y in [[len(x[i]) for x in table] for i in range(len(table[0]))]]
+    for i in max_width_per_column:
         max_str += i
-    print("/{0:->{1}}".format("", max_str), end="\\\n")
-
-
-# list_p = data_manager.get_table_from_file("items.csv")
-# # # for i in list_p:
-# # #     for k in i:
-# # #         print(k)
-# count = 0
-# max_list = []
-# max_str = 0
-# for k, v in enumerate(list_p):
-#     if count < len(list_p[k]):
-#         max_list.append(max([len(x[count]) for x in list_p]))
-#         # max_str += max_list[count]
-#     count += 1
-# title = ["aaaaaa", "bb", "c", "dddddd", "23", "eded"]
-#
-# max_title = [len(x) for x in title]
-# print(list(zip(max_title, max_list)))
-# print(max_list, " ", max_str, " ", max_title)
-# maxi = [max(x[0], x[1]) for x in list(zip([len(x) for x in title], max_list))]
-# for i in maxi:
-#     max_str += i
-# print(maxi, " ", max_str)
+    print("/{0:->{1}}".format("", max_str+len(title_list)-1), end="\\\n")
+    for k, v in enumerate(list_p):
+        for i, x in enumerate(v):
+            if i < len(v)-1:
+                print("/{0:^{1}}".format(x, max_width_per_column[i]), end="")
+            if i == len(v)-1:
+                print("/{0:^{1}}".format(x, max_width_per_column[i]), end="/\n")
+        if k < len(list_p)-1:
+            for j, y in enumerate(v):
+                if j < len(v)-1:
+                    print("/{0:-^{1}}".format("", max_width_per_column[j]), end="")
+                if j == len(v)-1:
+                    print("/{0:-^{1}}".format("", max_width_per_column[j]), end="/\n")
+    print("\\{0:->{1}}".format("", max_str+len(title_list)-1), end="/\n")
 
 
 # This function needs to print result of the special functions
@@ -64,7 +48,6 @@ def print_result(result, label):
     if type(result) is dict:
         for key in result:
             print("key: {0}; values:{1}".format(key, result[key]))
-    
 
 
 # This function needs to generate outputs like this:
@@ -76,10 +59,11 @@ def print_result(result, label):
 # (5) Selling manager
 # (6) Customer relationship management (CRM)
 # (0) Exit program
-#
 # @title: string - title of the menu
 # @list_options: list of strings - the options in the menu
 # @exit_message: string - the last option with (0) (example: "Back to main menu")
+
+
 def print_menu(title, list_options, exit_message):
     print("{0}:".format(title))
     count = 1

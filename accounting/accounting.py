@@ -40,12 +40,11 @@ def start_module():
 
 def handle_menu():
     options = ["Show accounting table",
-               "Add record to accounting table",
-               "Remove record from accounting table",
-               "Update record in accounting table",
-               "Show the year of highest profit",
-               "Show the average profit for the year"]
-
+               "Adding new record",
+               "Removing record",
+               "Updating record",
+               "Show year of highest profit",
+               "Show average profit for a year"]
     ui.print_menu("Accounting menu", options, "Back to main menu")
 
 
@@ -79,25 +78,14 @@ def choose():
 #
 # @table: list of lists
 def show_table(table):
-    title_list = ["Id",
-                  "Month",
-                  "Day",
-                  "Year",
-                  "Type",
-                  "Amount (dollar)"]
-    ui.print_table(table, title_list)
+    ui.print_table(table, ["Id", "Month", "Day", "Year", "Type", "Amount"])
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
 #
 # @table: list of lists
 def add(table):
-    list_labels = ["Month",
-                   "Day",
-                   "Year",
-                   "Type",
-                   "Amount (dollar)"]
-    record = ui.get_inputs(list_labels, "Adding new record to accounting table")
+    record = ui.get_inputs(["Month: ", "Day: ", "Year: ", "Type: ", "Amount (dollar): "], "Adding new record")
     record.insert(0, common.generate_random(table))
     table.append(record)
     data_manager.write_table_to_file("accounting/items.csv", table)
@@ -120,14 +108,8 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    list_labels = ["Month",
-                   "Day",
-                   "Year",
-                   "Type",
-                   "Amount (dollar)"]
-    record = ui.get_inputs(list_labels, "Updating record in accounting table")
-    record.insert(0, id_)
-    table[table.index([x for x in table if x[0] == id_][0])] = record
+    record = ui.get_inputs(["Month: ", "Day: ", "Year: ", "Type: ", "Amount: "], "Updating record in accounting table")
+    table[table.index([x for x in table if x[0] == id_][0])][1:] = record
     data_manager.write_table_to_file("accounting/items.csv", table)
     return table
 
@@ -151,7 +133,7 @@ def which_year_max(table):
     for i in list(set(x[3] for x in table)):
         profit_list.append([sum_profit(table, i), i])
     result = [x[1] for x in profit_list if x[0] == max([x[0] for x in profit_list])][0]
-    ui.print_result(result, "The year which had most profit")
+    ui.print_result(result, "The year which had most profit:\n")
     return result
 
 
@@ -160,5 +142,5 @@ def which_year_max(table):
 def avg_amount(table, year):
     profit = sum_profit(table, year)
     result = profit / len([x for x in table if x[3] == str(year)])
-    ui.print_result(str(result), "Average profit (per item) in the given year is")
+    ui.print_result(str(result), "Average profit (per item) in the given year is:\n")
     return result

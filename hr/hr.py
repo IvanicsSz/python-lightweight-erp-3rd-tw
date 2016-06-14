@@ -79,8 +79,8 @@ def show_table(table):
 # @table: list of lists
 def add(table):
     list_labels = ["Enter name:", "Enter date of birth:"]
-    # new_id_ = ID generation needed from UI
-    new_employee_data = ui.get_inputs(list_labels, title)
+    new_id_ = common.generate_random(table)
+    new_employee_data = ui.get_inputs(list_labels)
     new_employee_data.insert(0, new_id_)
     table.append(new_employee_data)
     data_manager.write_table_to_file("hr/persons.csv", table)
@@ -107,8 +107,7 @@ def remove(table, id_):
 def update(table, id_):
     for line in table:
         if id_ in line:
-            for data in line[1:]:
-                data = ui.get_inputs("Please enter updated data:")   # ????????????????
+            line[1:] = ui.get_inputs(["Enter name:", "Enter date of birth:"])
     data_manager.write_table_to_file("hr/persons.csv", table)
     return table
 

@@ -49,8 +49,7 @@ def handle_menu():
 
 
 def choose():
-    inputs = ui.get_inputs(["Please enter a number: "], "")
-    option = inputs[0]
+    option = ui.get_inputs(["Please enter a number: "], "")[0]
     table = data_manager.get_table_from_file("accounting/items.csv")
     global back_to_main
     if option == "1" or option == "3" or option == "4":
@@ -117,21 +116,14 @@ def update(table, id_):
 # special functions:
 # ------------------
 def sum_profit(table, year):
-    res = 0
-    for i in [[x[5], x[4]] for x in table if x[3] == str(year)]:
-        if i[1] == "in":
-            res += int(i[0])
-        else:
-            res -= int(i[0])
-    return res
+    res = common.summing([int(x[5]) for x in table if x[3] == str(year) and x[4] == "in"])
+    return res - common.summing([int(x[5]) for x in table if x[3] == str(year) and x[4] == "out"])
 
 
 # the question: Which year has the highest profit? (profit=in-out)
 # return the answer (number)
 def which_year_max(table):
-    profit_list = []
-    for i in list(set(x[3] for x in table)):
-        profit_list.append([sum_profit(table, i), i])
+    profit_list = [[sum_profit(table, i), i] for i in list(set(x[3] for x in table))]
     result = [x[1] for x in profit_list if x[0] == max([x[0] for x in profit_list])][0]
     ui.print_result(result, "The year which had most profit:\n")
     return result
@@ -140,7 +132,6 @@ def which_year_max(table):
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
 def avg_amount(table, year):
-    profit = sum_profit(table, year)
-    result = profit / len([x for x in table if x[3] == str(year)])
+    result = sum_profit(table, year) / len([x for x in table if x[3] == str(year)])
     ui.print_result(str(result), "Average profit (per item) in the given year is:\n")
     return result

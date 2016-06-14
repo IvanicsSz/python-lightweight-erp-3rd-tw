@@ -55,7 +55,7 @@ def choose():
                     ui.print_error_message("ID given does not exist")
                 id_ = ui.get_inputs(["ID to be updated or 0 to exit:"])[0]
             if id_ != 0:
-                update(table, id_[0])
+                update(table, id_)
     elif option == "2":
         add(table)
     elif option == "5":
@@ -122,9 +122,11 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-
-    # your code
-
+    for line in table:
+        if id_ in line:
+            line[1:] = ui.get_inputs(["Enter name:", "Enter manufacturer:", "Enter date of purchase:",
+                                     "Enter durability:"])
+    data_manager.write_table_to_file("tool_manager/tools.csv", table)
     return table
 
 

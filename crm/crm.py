@@ -40,10 +40,18 @@ def choose():
     if option == "1" or option == "3" or option == "4":
         show_table(table)
         if option == "3":
-            id_ = ui.get_inputs(["Enter your ID: "], "")[0]
+            id_ = ""
+            while id_ not in [item[0] for item in table]:
+                if id_ != "":
+                    ui.print_error_message("ID given does not exist")
+                id_ = ui.get_inputs(["Enter your ID: "], "")[0]
             remove(table, id_)
         elif option == "4":
-            id_ = ui.get_inputs(["Enter your ID: "], "")[0]
+            id_ = ""
+            while id_ not in [item[0] for item in table]:
+                if id_ != "":
+                    ui.print_error_message("ID given does not exist")
+                id_ = ui.get_inputs(["Enter your ID: "], "")[0]
             update(table, id_)
     elif option == "2":
         add(table)
@@ -73,7 +81,7 @@ def start_module():
 # @table: list of lists
 def show_table(table):
 
-    title_list = ["id", "name", "e-mail address", "subscription"]
+    title_list = ["id", "Name", "E-mail address", "Subscription"]
     ui.print_table(table, title_list)
 
 
@@ -87,10 +95,11 @@ def add(table):
     ui.print_table(table, title_list)
 
     new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Add a new record to the table")
+    table = common.adding(table, new_record)
 
-    new_id = common.generate_random(table)
-    new_record.insert(0, new_id)
-    table.append(new_record)
+    # new_id = common.generate_random(table)
+    # new_record.insert(0, new_id)
+    # table.append(new_record)
 
     data_manager.write_table_to_file("crm/customers.csv", table)
     ui.print_table(table, title_list)
@@ -100,11 +109,11 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    title_list = ['id', 'name', 'e-mail', 'subscription']
-    # ui.print_table(table, title_list)
-    for item in table:
-        if item[0] == id_:
-            table.remove(item)
+    # for item in table:
+    #     if item[0] == id_:
+    #         table.remove(item)
+
+    common.removing(table, id_)
     data_manager.write_table_to_file("crm/customers.csv", table)
     return table
 
@@ -115,15 +124,12 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    title_list = ['id', 'name', 'e-mail', 'subscription']
-    ui.print_table(table, title_list)
 
     new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table")
-    new_record.insert(0, id_)
-    table.append(new_record)
+    record = next(item for item in table if item[0] == id_)
+    table[table.index(record)][1:] = new_record
 
     data_manager.write_table_to_file("crm/customers.csv", table)
-    ui.print_table(table, title_list)
 
     return table
 

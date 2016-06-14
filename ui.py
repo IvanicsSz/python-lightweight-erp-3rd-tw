@@ -1,16 +1,16 @@
 # This function needs to print outputs like this:
- # /-----------------------------------\
- # |   id   |      title     |  type   |
+# /-----------------------------------\
+# |   id   |      title     |  type   |
 # |--------|----------------|---------|
 # |   0    | Counter strike |    fps  |
 # |--------|----------------|---------|
 # |   1    |       fo       |    fps  |
- # \-----------------------------------/
+# \-----------------------------------/
 # @table: list of lists - the table to print out
 # @title_list: list of strings - the head of the table
 
 
-def print_table(table, title_list):
+def print_table(table, title_list=""):
     max_str = 0
     table.insert(0, title_list)
     max_width_per_column = [max(y) for y in [[len(x[i]) for x in table] for i in range(len(table[0]))]]

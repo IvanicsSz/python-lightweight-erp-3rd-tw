@@ -10,6 +10,7 @@
 # importing everything you need
 import os
 from importlib.machinery import SourceFileLoader
+from datetime import date
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 # User interface module
 ui = SourceFileLoader("ui", current_file_path + "/../ui.py").load_module()
@@ -55,7 +56,7 @@ def choose():
                     ui.print_error_message("ID given does not exist")
                 id_ = ui.get_inputs(["ID to be updated or 0 to exit:"])[0]
             if id_ != 0:
-                update(table, id_[0])
+                update(table, id_)
     elif option == "2":
         add(table)
     elif option == "5":
@@ -122,9 +123,11 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-
-    # your code
-
+    for line in table:
+        if id_ in line:
+            line[1:] = ui.get_inputs(["Enter name:", "Enter manufacturer:", "Enter date of purchase:",
+                                     "Enter durability:"])
+    data_manager.write_table_to_file("tool_manager/tools.csv", table)
     return table
 
 
@@ -136,10 +139,13 @@ def update(table, id_):
 #
 # @table: list of lists
 def get_available_tools(table):
-
-    # your code
-
-    pass
+    available_tools = []
+    actual_year = date.today().year
+    for line in table:
+        if (actual_year - (int(line[3]) + int(line[4]))) < 0:
+            available_tools.append(line)
+    ui.print_result(available_tools, "Tools available:")
+    return available_tools
 
 
 # the question: What are the average durability time for each manufacturer?

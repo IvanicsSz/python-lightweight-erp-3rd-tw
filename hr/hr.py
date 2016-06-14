@@ -118,18 +118,20 @@ def update(table, id_):
 # the question: Who is the oldest person ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_oldest_person(table):
-    max_year = max(data[2] for data in table)
+    max_year = min([data[2] for data in table])
     oldest_employee = []
     for line in table:
         if max_year in line:
             oldest_employee.append(line[1])
-    data_manager.write_table_to_file("hr/persons.csv", table)
+    ui.print_result(oldest_employee, "Oldest employee(s):")
     return oldest_employee
 
 
 # the question: Who is the closest to the average age ?
 # return type: list of strings (name or names if there are two more with the same value)
 def get_persons_closest_to_average(table):
-    average_year = float(sum([line[2] for line in table]) / len(table))
-
-    pass
+    average_year = float(common.summing([int(line[2]) for line in table]) // len(table))
+    min_diff = min([abs(int(line[2]) - average_year) for line in table])
+    closest_average = [line[1] for line in table if abs(int(line[2]) - average_year) == min_diff]
+    ui.print_result(closest_average, "Employee closest to average age:")
+    return closest_average

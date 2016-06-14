@@ -1,4 +1,5 @@
 # implement commonly used functions here
+# import data_manager
 import string
 import random
 
@@ -19,10 +20,17 @@ def generate_random(table):
         generated += "#&"
     return generated
 
+
 def sorting(list_sort):
     for i in range(len(list_sort)):
         for n in range(1, len(list_sort)):
             if list_sort[n] < list_sort[n - 1]:
                 list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
     return list_sort
-# print(sorting(my_list))
+
+
+def removing(table, _id):
+    table_list = [v for k, v in enumerate(table)]
+    index = [k for k, v in enumerate(table) if v[0] == _id]
+    del table_list[index[0]]
+    return table_list

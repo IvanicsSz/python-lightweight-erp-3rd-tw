@@ -52,12 +52,8 @@ def adding(table, add_list):
 
 
 def updating(table, _id, update_list):
-    index = [k for k, v in enumerate(table) if v[0] == _id]
-    _id = _id.split() + update_list
-    if index:
-        table.append(_id)
-        del table[index[0]]
-        return table
+    if [x for x in table if x[0] == _id]:
+        table = [x for x in table if x[0] != _id] + [[_id] + update_list]
     return table
 
 

@@ -84,9 +84,7 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    record = ui.get_inputs(["Month: ", "Day: ", "Year: ", "Type: ", "Amount (dollar): "])
-    record.insert(0, common.generate_random(table))
-    table.append(record)
+    table = common.adding(table, ui.get_inputs(["Month: ", "Day: ", "Year: ", "Type: ", "Amount (dollar): "]))
     data_manager.write_table_to_file("accounting/items.csv", table)
     return table
 
@@ -96,7 +94,7 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    table.remove([x for x in table if x[0] == id_][0])
+    table = common.removing(table, id_)
     data_manager.write_table_to_file("accounting/items.csv", table)
     return table
 
@@ -107,9 +105,7 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    record = ui.get_inputs(["Month: ", "Day: ", "Year: ", "Type: ", "Amount (dollar): "])
-    record.insert(0, id_)
-    table = [x for x in table if x[0] != id_] + [record]
+    table = common.updating(table, id_, ui.get_inputs(["Month: ", "Day: ", "Year: ", "Type: ", "Amount (dollar): "]))
     data_manager.write_table_to_file("accounting/items.csv", table)
     return table
 

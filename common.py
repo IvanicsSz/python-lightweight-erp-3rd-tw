@@ -20,12 +20,17 @@ def generate_random(table):
     return generated
 
 
-def sorting(list_sort):
+def sorting(list_sort, index=""):
     """sorting an unsorted list  """
+
     for i in range(len(list_sort)):
         for n in range(1, len(list_sort)):
-            if list_sort[n] < list_sort[n - 1]:
-                list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
+            if index == "":
+                if list_sort[n] < list_sort[n - 1]:
+                    list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
+            else:
+                if list_sort[n][index] < list_sort[n - 1][index]:
+                    list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
     return list_sort
 
 

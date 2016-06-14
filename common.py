@@ -14,9 +14,7 @@ def generate_random(table):
     generated = ""
     while(generated == "" or generated in [x[0] for x in table]):
         abc = [string.digits, string.ascii_uppercase, string.ascii_lowercase]
-        for i in range(-5, 6, 2):
-            generated += random.choice(abc[abs(i)//2])
-        generated += "#&"
+        generated = ''.join([random.choice(abc[abs(i)//2]) for i in range(-5, 6, 2)]) + "#&"
     return generated
 
 

@@ -23,12 +23,7 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 #
 # @table: list of lists
 def show_table(table):
-    title_list = ["ID",
-                  "Title",
-                  "Manufacturer",
-                  "Price",
-                  "Copies in stock"]
-
+    title_list = ["ID", "Title", "Manufacturer", "Price", "Copies in stock"]
     ui.print_table(table, title_list)
 
 
@@ -36,12 +31,8 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    new_id = common.generate_random(table)
     new_record = ui.get_inputs(["Title: ", "Manufacturer: ", "Price: ", "Copies in stock: "], "")
-    new_record.insert(0, new_id)
-    table.append(new_record)
-
-    return table
+    return common.adding(table, new_record)
 
 
 # Remove the record having the id @id_ from the @list, than return @table
@@ -49,10 +40,7 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    print("hello remove\n\n\n\n")
-    # your code
-
-    return table
+    return common.removing(table, id_)
 
 
 # Update the record in @table having the id @id_ by asking the new data from the user,
@@ -98,9 +86,11 @@ def choose():
     elif option == "2":
         data_manager.write_table_to_file(file_name, add(table))
     elif option == "3":
-        remove(table, "placeholder")
+        remove_id = ui.get_inputs(["Enter the ID of the record to be removed: "], "")
+        data_manager.write_table_to_file(file_name, remove(table, remove_id))
     elif option == "4":
-        update(table, "placeholder")
+        update_id = ui.get_inputs(["Enter the ID of the record to be updated: "], "")
+        data_manager.write_table_to_file(file_name, update(table, update_id))
     elif option == "5":
         get_counts_by_manufacturers(table)
     elif option == "6":

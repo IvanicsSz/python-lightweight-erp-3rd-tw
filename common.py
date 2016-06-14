@@ -1,5 +1,5 @@
 # implement commonly used functions here
-
+import string
 import random
 
 
@@ -11,9 +11,18 @@ import random
 # @table: list of list
 # @generated: string - generated random string (unique in the @table)
 def generate_random(table):
-
-    generated = ''
-
-    # your code
-
+    generated = ""
+    while(generated == "" or generated in [x[0] for x in table]):
+        abc = [string.digits, string.ascii_uppercase, string.ascii_lowercase]
+        for i in range(-5, 6, 2):
+            generated += random.choice(abc[abs(i)//2])
+        generated += "#&"
     return generated
+
+def sorting(list_sort):
+    for i in range(len(list_sort)):
+        for n in range(1, len(list_sort)):
+            if list_sort[n] < list_sort[n - 1]:
+                list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
+    return list_sort
+# print(sorting(my_list))

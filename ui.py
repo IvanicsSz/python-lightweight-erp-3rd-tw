@@ -67,10 +67,8 @@ def print_result(result, label):
 
 def print_menu(title, list_options, exit_message):
     print("{0}:".format(title))
-    count = 1
-    for i in list_options:
-        print("({0}) {1}".format(count, i))
-        count += 1
+    for i, v in enumerate(list_options, 1):
+        print("({0}) {1}".format(i, v))
     print("(0) {0}".format(exit_message))
 
 

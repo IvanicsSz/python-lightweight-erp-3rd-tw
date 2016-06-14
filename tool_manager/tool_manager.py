@@ -10,6 +10,7 @@
 # importing everything you need
 import os
 from importlib.machinery import SourceFileLoader
+from datetime import date
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 # User interface module
 ui = SourceFileLoader("ui", current_file_path + "/../ui.py").load_module()
@@ -138,10 +139,13 @@ def update(table, id_):
 #
 # @table: list of lists
 def get_available_tools(table):
-
-    # your code
-
-    pass
+    available_tools = []
+    actual_year = date.today().year
+    for line in table:
+        if (actual_year - (int(line[3]) + int(line[4]))) < 0:
+            available_tools.append(line)
+    ui.print_result(available_tools, "Tools available:")
+    return available_tools
 
 
 # the question: What are the average durability time for each manufacturer?

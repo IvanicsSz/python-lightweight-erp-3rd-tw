@@ -61,18 +61,28 @@ def update(table, id_):
 # the question: How many different kinds of game are available of each manufacturer?
 # return type: a dictionary with this structure: { [manufacturer] : [count] }
 def get_counts_by_manufacturers(table):
-    print("hello get counts by manufacturer\n\n\n\n")
-    # your code
+    manufacturers_dict = {row[2]: set() for row in table}  # key: manufacturer, value: set of game types
+    for manuf in manufacturers_dict:  # for each manufacturer
+        for i in range(len(table)):  # check each record
+            if manuf == table[i][2]: #  if the record has the manufacturer we are looking for
+                manufacturers_dict[manuf].add(table[i][1])  # add the game title to the set of that manufacturer
+        manufacturers_dict[manuf] = len(manufacturers_dict[manuf])  # when all the types are added, find its length
+    return manufacturers_dict
 
-    pass
 
 
 # the question: What is the average amount of games in stock of a given manufacturer?
 # return type: number
 def get_average_by_manufacturer(table, manufacturer):
-    in_stock = 0
+    token_in_stock = 0
+    type_in_stock = 0
 
-    return in_stock
+    for i in table:
+        if i[2] == manufacturer:
+            token_in_stock += int(i[4])
+            type_in_stock += 1
+    average = token_in_stock / type_in_stock
+    return average
 
 
 def choose():
@@ -91,10 +101,11 @@ def choose():
         update_id = ui.get_inputs(["Enter the ID of the record to be updated: "], "")[0]
         data_manager.write_table_to_file(file_name, update(table, update_id))
     elif option == "5":
-        get_counts_by_manufacturers(table)
+        ui.print_result(get_counts_by_manufacturers(table), "Number of game types in stock by manufacturer:")
     elif option == "6":
         manuf = ui.get_inputs(["Enter a manufacturer: "], "")[0]
-        get_average_by_manufacturer(table, manuf)
+        average = str(get_average_by_manufacturer(table, manuf))
+        ui.print_result(average, "Average number of games in stock by {0}:".format(manuf))
     elif option == "0":
         return "stop"
     else:

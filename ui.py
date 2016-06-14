@@ -1,11 +1,11 @@
 # This function needs to print outputs like this:
-# /-----------------------------------\
-# |   id   |      title     |  type   |
+ # /-----------------------------------\
+ # |   id   |      title     |  type   |
 # |--------|----------------|---------|
 # |   0    | Counter strike |    fps  |
 # |--------|----------------|---------|
 # |   1    |       fo       |    fps  |
-# \-----------------------------------/
+ # \-----------------------------------/
 # @table: list of lists - the table to print out
 # @title_list: list of strings - the head of the table
 
@@ -17,25 +17,26 @@ def print_table(table, title_list):
     for i in max_width_per_column:
         max_str += i
     print("/{0:->{1}}".format("", max_str+len(title_list)-1), end="\\\n")
-    for k, v in enumerate(list_p):
+    for k, v in enumerate(table):
         for i, x in enumerate(v):
             if i < len(v)-1:
-                print("/{0:^{1}}".format(x, max_width_per_column[i]), end="")
+                print("|{0:^{1}}".format(x, max_width_per_column[i]), end="")
             if i == len(v)-1:
-                print("/{0:^{1}}".format(x, max_width_per_column[i]), end="/\n")
-        if k < len(list_p)-1:
+                print("|{0:^{1}}".format(x, max_width_per_column[i]), end="|\n")
+        if k < len(table)-1:
             for j, y in enumerate(v):
                 if j < len(v)-1:
-                    print("/{0:-^{1}}".format("", max_width_per_column[j]), end="")
+                    print("|{0:-^{1}}".format("", max_width_per_column[j]), end="")
                 if j == len(v)-1:
-                    print("/{0:-^{1}}".format("", max_width_per_column[j]), end="/\n")
+                    print("|{0:-^{1}}".format("", max_width_per_column[j]), end="|\n")
     print("\\{0:->{1}}".format("", max_str+len(title_list)-1), end="/\n")
-
-
+    table.pop(0)
 # This function needs to print result of the special functions
 #
 # @result: string or list or dictionary - result of the special function
 # @label: string - label of the result
+
+
 def print_result(result, label):
     print(label)
     if type(result) is str:

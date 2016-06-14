@@ -22,6 +22,7 @@ def generate_random(table):
 
 
 def sorting(list_sort):
+    """sorting an unsorted list  """
     for i in range(len(list_sort)):
         for n in range(1, len(list_sort)):
             if list_sort[n] < list_sort[n - 1]:
@@ -30,7 +31,22 @@ def sorting(list_sort):
 
 
 def removing(table, _id):
+    """an id defined item remove from list """
     table_list = [v for k, v in enumerate(table)]
     index = [k for k, v in enumerate(table) if v[0] == _id]
     del table_list[index[0]]
     return table_list
+
+
+def adding(table, add_list):
+    """ ad new id element to a list"""
+    _id = [generate_random(table)]
+    for i in list_add:
+        _id.append(i)
+    table.append(_id)
+    return table
+
+
+
+# table = data_manager.get_table_from_file("items.csv")
+# list_add = [10, 23, 2016, "out", 40]

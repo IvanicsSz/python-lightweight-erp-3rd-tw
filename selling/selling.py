@@ -41,8 +41,9 @@ def handle_menu():
                "Add record to selling table",
                "Remove record from selling table",
                "Update record in selling table",
-               "Items are sold between dates",
-               "Id of the item that sold for the lowest price"
+               "Id of the item that sold for the lowest price",
+               "Items are sold between dates"
+
                ]
     ui.print_menu("Selling menu", options, "Back to Main Menu")
 

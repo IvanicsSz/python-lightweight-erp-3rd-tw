@@ -1,6 +1,6 @@
 # implement commonly used functions here
-import string
 import random
+import string
 
 
 # generate and return a unique and random string
@@ -26,7 +26,7 @@ def sorting(list_sort, index=""):
                 if list_sort[n] < list_sort[n - 1]:
                     list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
             else:
-                if list_sort[n][index].casefold() < list_sort[n - 1][index].casefold():
+                if list_sort[n][index] < list_sort[n - 1][index]:
                     list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
     return list_sort
 

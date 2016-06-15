@@ -130,12 +130,10 @@ def sum_profit(table, year):
 # return the answer (number)
 def which_year_max(table):
     profit_list = [[sum_profit(table, i), i] for i in list(set(x[3] for x in table))]
-    result = [x[1] for x in profit_list if x[0] == max([x[0] for x in profit_list])][0]
-    return int(result)
+    return int([x[1] for x in list(reversed(common.sorting(profit_list, 0)))][0])
 
 
 # the question: What is the average (per item) profit in a given year? [(profit)/(items count) ]
 # return the answer (number)
 def avg_amount(table, year):
-    result = sum_profit(table, year) / len([x for x in table if x[3] == str(year)])
-    return result
+    return sum_profit(table, year) / len([x for x in table if x[3] == str(year)])

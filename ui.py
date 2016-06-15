@@ -11,6 +11,7 @@
 
 
 def print_table(table, title_list=""):
+    """print lists in a defined way"""
     max_str = 0
     table.insert(0, title_list)
     max_width_per_column = [max(y) for y in [[len(x[i]) for x in table] for i in range(len(table[0]))]]
@@ -38,6 +39,7 @@ def print_table(table, title_list=""):
 
 
 def print_result(result, label):
+    """print functions results"""
     print(label)
     if type(result) is str:
         print(result)
@@ -66,6 +68,7 @@ def print_result(result, label):
 
 
 def print_menu(title, list_options, exit_message):
+    """print menus with numbers in it"""
     print("{0}:".format(title))
     for i, v in enumerate(list_options, 1):
         print("({0}) {1}".format(i, v))
@@ -78,7 +81,7 @@ def print_menu(title, list_options, exit_message):
 # @title: string - title of the "input section"
 # @inputs: list of string - list of the received values from the user
 def get_inputs(list_labels, title=""):
-    inputs = []
+    """get input from the user"""
     print("{0}:".format(title))
     inputs = [input(i) for i in list_labels]
     return inputs
@@ -88,4 +91,5 @@ def get_inputs(list_labels, title=""):
 #
 # @message: string - the error message
 def print_error_message(message):
+    """print actual error messages"""
     print("Error: {0}".format(message))

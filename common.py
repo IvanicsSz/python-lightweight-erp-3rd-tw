@@ -11,6 +11,7 @@ import random
 # @table: list of list
 # @generated: string - generated random string (unique in the @table)
 def generate_random(table):
+    """generate a random unique id"""
     generated = ""
     while(generated == "" or generated in [x[0] for x in table]):
         abc = [string.digits, string.ascii_uppercase, string.ascii_lowercase]
@@ -19,8 +20,7 @@ def generate_random(table):
 
 
 def sorting(list_sort, index=""):
-    """sorting an unsorted list  """
-
+    """sorting an unsorted list (with index)"""
     for i in range(len(list_sort)):
         for n in range(1, len(list_sort)):
             if index == "":
@@ -33,7 +33,7 @@ def sorting(list_sort, index=""):
 
 
 def removing(table, _id):
-    """an id defined item remove from list """
+    """an id defined item remove from list"""
     return [x for x in table if x[0] != _id]
 
 
@@ -52,12 +52,14 @@ def adding(table, add_list):
 
 
 def updating(table, _id, update_list):
+    """updating a list with modification"""
     if [x for x in table if x[0] == _id]:
         table = [x for x in table if x[0] != _id] + [[_id] + update_list]
     return table
 
 
 def summing(sum_list):
+    """sum of a list"""
     summa = 0
     for i in sum_list:
         summa += i

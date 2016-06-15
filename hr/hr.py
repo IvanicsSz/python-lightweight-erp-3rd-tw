@@ -52,13 +52,13 @@ def choose():
                     ui.print_error_message("ID given does not exist")
                 id_ = ui.get_inputs(["ID to be updated or 0 to exit:"])[0]
             if id_ != 0:
-                update(table, id_[0])
+                update(table, id_)
     elif option == "2":
         add(table)
     elif option == "5":
-        get_oldest_person(table)
+        ui.print_result(get_oldest_person(table), "Oldest employee(s):")
     elif option == "6":
-        get_persons_closest_to_average(table)
+        ui.print_result(get_persons_closest_to_average(table), "Employee closest to average age:")
     elif option == "0":
         return "stop"
     else:
@@ -76,6 +76,7 @@ def start_module():
             if choice == "stop":
                 break
 
+
 # print the default table of records from the file
 #
 # @table: list of lists
@@ -88,16 +89,14 @@ def show_table(table):
 #
 # @table: list of lists
 def add(table):
-    list_labels = [["Enter name:"], ["Enter date of birth:"]]
-    new_id_ = common.generate_random(table)
+    list_labels = [["Enter name or 0 to exit:"], ["Enter date of birth or 0 to exit:"]]
     new_employee_data = []
     for entry in list_labels:
         new_employee_data.append(ui.get_inputs(entry)[0])
         if "0" in new_employee_data:
             break
     if "0" not in new_employee_data:
-        new_employee_data.insert(0, new_id_)
-        table.append(new_employee_data)
+        table = common.adding(table, new_employee_data)
         data_manager.write_table_to_file("hr/persons.csv", table)
     return table
 
@@ -107,9 +106,7 @@ def add(table):
 # @table: list of lists
 # @id_: string
 def remove(table, id_):
-    for line in table:
-        if id_ in line:
-            table.remove(line)
+    table = common.removing(table, id_)
     data_manager.write_table_to_file("hr/persons.csv", table)
     return table
 
@@ -138,7 +135,6 @@ def get_oldest_person(table):
     for line in table:
         if max_year in line:
             oldest_employee.append(line[1])
-    ui.print_result(oldest_employee, "Oldest employee(s):")
     return oldest_employee
 
 
@@ -148,5 +144,4 @@ def get_persons_closest_to_average(table):
     average_year = float(common.summing([int(line[2]) for line in table]) // len(table))
     min_diff = min([abs(int(line[2]) - average_year) for line in table])
     closest_average = [line[1] for line in table if abs(int(line[2]) - average_year) == min_diff]
-    ui.print_result(closest_average, "Employee closest to average age:")
     return closest_average

@@ -60,9 +60,9 @@ def choose():
     elif option == "2":
         add(table)
     elif option == "5":
-        get_available_tools(table)
+        ui.print_result(get_available_tools(table), "Tools available:")
     elif option == "6":
-        get_average_durability_by_manufacturers(table)
+        ui.print_result(get_average_durability_by_manufacturers(table), "Average durability per manufacturer:")
     elif option == "0":
         return "stop"
     else:
@@ -147,7 +147,6 @@ def get_available_tools(table):
     for line in table:
         if (actual_year - (int(line[3]) + int(line[4]))) < 0:
             available_tools.append(line)
-    ui.print_result(available_tools, "Tools available:")
     return available_tools
 
 
@@ -163,5 +162,4 @@ def get_average_durability_by_manufacturers(table):
     for line in manufacturers:
         durability = [x[4] for x in table if x[2] == line]
         average_dur[line] = common.summing(durability) / len(durability)
-    ui.print_result(average_dur, "Average durability per manufacturer:")
     return average_dur

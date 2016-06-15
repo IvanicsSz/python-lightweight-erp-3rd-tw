@@ -12,26 +12,32 @@
 
 def print_table(table, title_list=""):
     """print lists in a defined way"""
-    max_str = 0
-    table.insert(0, title_list)
+    if title_list:
+        table.insert(0, title_list)
     max_width_per_column = [max(y) for y in [[len(x[i]) for x in table] for i in range(len(table[0]))]]
-    for i in max_width_per_column:
-        max_str += i
-    print("/{0:->{1}}".format("", max_str+len(title_list)-1), end="\\\n")
+    print("╔", end="")
+    for i in range(len(max_width_per_column)-1):
+        print("{0:═>{1}}".format("", max_width_per_column[i]), end="╤")
+    print("{0:═>{1}}".format("", max_width_per_column[-1]), end="╗\n")
     for k, v in enumerate(table):
         for i, x in enumerate(v):
-            if i < len(v)-1:
-                print("|{0:^{1}}".format(x, max_width_per_column[i]), end="")
-            if i == len(v)-1:
-                print("|{0:^{1}}".format(x, max_width_per_column[i]), end="|\n")
+            if i == 0:
+                print("║{0:^{1}}".format(x, max_width_per_column[i]), end="")
+            elif i < len(v)-1:
+                print("│{0:^{1}}".format(x, max_width_per_column[i]), end="")
+            else:
+                print("│{0:^{1}}".format(x, max_width_per_column[i]), end="║\n")
         if k < len(table)-1:
-            for j, y in enumerate(v):
-                if j < len(v)-1:
-                    print("|{0:-^{1}}".format("", max_width_per_column[j]), end="")
-                if j == len(v)-1:
-                    print("|{0:-^{1}}".format("", max_width_per_column[j]), end="|\n")
-    print("\\{0:->{1}}".format("", max_str+len(title_list)-1), end="/\n")
-    table.pop(0)
+            print("╟{0:─^{1}}".format("", max_width_per_column[0]), end="")
+            for j in range(1, len(v)-1):
+                print("┼{0:─^{1}}".format("", max_width_per_column[j]), end="")
+            print("┼{0:─^{1}}".format("", max_width_per_column[-1]), end="╢\n")
+    print("╚", end="")
+    for i in range(len(max_width_per_column)-1):
+        print("{0:═>{1}}".format("", max_width_per_column[i]), end="╧")
+    print("{0:═>{1}}".format("", max_width_per_column[-1]), end="╝\n")
+    if title_list:
+        table.pop(0)
 # This function needs to print result of the special functions
 #
 # @result: string or list or dictionary - result of the special function

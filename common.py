@@ -27,7 +27,7 @@ def sorting(list_sort, index=""):
                 if list_sort[n] < list_sort[n - 1]:
                     list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
             else:
-                if list_sort[n][index] < list_sort[n - 1][index]:
+                if list_sort[n][index].casefold() < list_sort[n - 1][index].casefold():
                     list_sort[n - 1], list_sort[n] = list_sort[n], list_sort[n - 1]
     return list_sort
 
@@ -39,16 +39,7 @@ def removing(table, _id):
 
 def adding(table, add_list):
     """ ad new id element to a list"""
-    _id = [generate_random(table)]
-    for i in add_list:
-        _id.append(i)
-    while len(table[0]) > len(_id):
-        _id.append("None")
-    while len(table[0]) < len(_id):
-        _id.pop()
-    if len(table[0]) == len(_id):
-        table.append(_id)
-    return table
+    return table + [[generate_random(table)] + add_list]
 
 
 def updating(table, _id, update_list):

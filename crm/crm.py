@@ -81,8 +81,9 @@ def start_module():
 # @table: list of lists
 def show_table(table):
 
-    title_list = ["id", "Name", "E-mail address", "Subscription"]
+    title_list = ["ID", "Name", "E-mail address", "Subscription"]
     ui.print_table(table, title_list)
+    return table
 
 
 # Ask a new record as an input from the user than add it to @table, than return @table
@@ -91,8 +92,7 @@ def show_table(table):
 
 
 def add(table):
-    title_list = ['id', 'name', 'e-mail', 'subscription']
-    ui.print_table(table, title_list)
+    show_table(table)
 
     new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Add a new record to the table")
     table = common.adding(table, new_record)
@@ -102,7 +102,9 @@ def add(table):
     # table.append(new_record)
 
     data_manager.write_table_to_file("crm/customers.csv", table)
-    ui.print_table(table, title_list)
+    show_table(table)
+    return table
+
 
 # Remove the record having the id @id_ from the @list, than return @table
 #
@@ -124,15 +126,17 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
+    # new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table")
+    # record = next(item for item in table if item[0] == id_)
+    # record = (item for item in table if item[0] == id_)[0]
 
-    new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table")
-    record = next(item for item in table if item[0] == id_)
-    table[table.index(record)][1:] = new_record
+    for line in table:
+        if id_ in line:
+            line[1:] = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table")
 
+# line[1:] = ui.get_inputs(["Enter your name: ", "Enter your e-mail address", "Subscription (0/1 = no/yes): "], "Update an existing record in the table") for line in table if id_ in line]
     data_manager.write_table_to_file("crm/customers.csv", table)
-
     return table
-
 
 # special functions:
 # ------------------

@@ -14,9 +14,7 @@ def generate_random(table):
     generated = ""
     while(generated == "" or generated in [x[0] for x in table]):
         abc = [string.digits, string.ascii_uppercase, string.ascii_lowercase]
-        for i in range(-5, 6, 2):
-            generated += random.choice(abc[abs(i)//2])
-        generated += "#&"
+        generated = ''.join([random.choice(abc[abs(i)//2]) for i in range(-5, 6, 2)]) + "#&"
     return generated
 
 
@@ -36,11 +34,7 @@ def sorting(list_sort, index=""):
 
 def removing(table, _id):
     """an id defined item remove from list """
-    index = [k for k, v in enumerate(table) if v[0] == _id]
-    if index:
-        del table[index[0]]
-        return table
-    return table
+    return [x for x in table if x[0] != _id]
 
 
 def adding(table, add_list):
@@ -58,12 +52,8 @@ def adding(table, add_list):
 
 
 def updating(table, _id, update_list):
-    index = [k for k, v in enumerate(table) if v[0] == _id]
-    _id = _id.split() + update_list
-    if index:
-        table.append(_id)
-        del table[index[0]]
-        return table
+    if [x for x in table if x[0] == _id]:
+        table = [x for x in table if x[0] != _id] + [[_id] + update_list]
     return table
 
 

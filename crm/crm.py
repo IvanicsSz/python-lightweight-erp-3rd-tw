@@ -23,11 +23,11 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 def handle_menu():
     options = ["Show customer records",
-                "Add new customer record",
-                "Remove customer record",
-                "Update customer record",
-                "ID of the customer with the longest name",
-                "Newsletter subscriptions"]
+               "Add new customer record",
+               "Remove customer record",
+               "Update customer record",
+               "ID of the customer with the longest name",
+               "Newsletter subscriptions"]
 
     ui.print_menu("Customer Relationship Management [menu] \n", options, "Back to main menu \n")
 
@@ -94,7 +94,10 @@ def show_table(table):
 
 def add(table):
     show_table(table)
-    new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Want to subscribe? yes/no: "], "Add a new record to the table \n")
+    new_record = ui.get_inputs(["Enter your name: ",
+                                "Enter your e-mail address: ",
+                                "Want to subscribe? yes/no: "],
+                               "Add a new record to the table \n")
     for answer in new_record:
         if answer == "yes":
             new_record[2] = "1"
@@ -131,13 +134,12 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    # new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table")
-    # record = next(item for item in table if item[0] == id_)
-    # record = (item for item in table if item[0] == id_)[0]
-
     for line in table:
         if id_ in line:
-            line[1:] = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table \n")
+            line[1:] = ui.get_inputs(["Enter your name: ",
+                                      "Enter your e-mail address: ",
+                                      "Subscription (0/1 = no/yes): "],
+                                     "Update an existing record in the table \n")
 
     data_manager.write_table_to_file("crm/customers.csv", table)
     return table

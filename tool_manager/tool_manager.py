@@ -139,6 +139,9 @@ def update(table, id_):
 #
 # @table: list of lists
 def get_available_tools(table):
+    for line in table:
+        line[3] = int(line[3])
+        line[4] = int(line[4])
     available_tools = []
     actual_year = date.today().year
     for line in table:
@@ -153,7 +156,12 @@ def get_available_tools(table):
 #
 # @table: list of lists
 def get_average_durability_by_manufacturers(table):
-
-    # your code
-
-    pass
+    for line in table:
+            line[4] = int(line[4])
+    manufacturers = set([line[2] for line in table])
+    average_dur = {}
+    for line in manufacturers:
+        durability = [x[4] for x in table if x[2] == line]
+        average_dur[line] = common.summing(durability) / len(durability)
+    ui.print_result(average_dur, "Average durability per manufacturer:")
+    return average_dur

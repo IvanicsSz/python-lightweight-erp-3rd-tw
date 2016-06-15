@@ -129,5 +129,5 @@ def get_lowest_price_item_id(table):
 # the question: Which items are sold between two given dates ? (from_date < birth_date < to_date)
 # return type: list of lists (the filtered table)
 def get_items_sold_between(table, fm, fd, fy, tm, td, ty):
-    res = [x for x in table if (fy*365+fm*31+fd) < (int(x[5])*365+int(x[3])*31+int(x[4])) < (ty*365+tm*31+td)]
+    res = [x for x in table if int(fy + fm + fd) < int(x[5] + x[3] + x[4]) < int(ty + tm + td)]
     return [[x[0], x[1], int(x[2]), int(x[3]), int(x[4]), int(x[5])] for x in res]

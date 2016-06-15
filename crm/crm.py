@@ -56,9 +56,11 @@ def choose():
     elif option == "2":
         add(table)
     elif option == "5":
-        get_longest_name_id(table)
+        label = "What is the id of the customer with the longest name? \n"
+        ui.print_result(get_longest_name_id(table), label)
     elif option == "6":
-        get_subscribed_emails(table)
+        label = "Which customers have subscribed to the newsletter? \n"
+        ui.print_result(get_subscribed_emails(table), label)
     elif option == "0":
         return "main"
     else:
@@ -150,9 +152,6 @@ def get_longest_name_id(table):
     name_max = max([len(item[1]) for item in table])
     list_names = [item[1] for item in table if len(item[1]) == name_max]
     list_sort = common.sorting(list_names)
-
-    label = "What is the id of the customer with the longest name? \n"
-    ui.print_result([item[0] for item in table if item[1] == list_sort[0]][0], label)
     return [item[0] for item in table if item[1] == list_sort[0]][0]
 
 
@@ -162,7 +161,4 @@ def get_subscribed_emails(table):
     emails = [item for item in table if item[3] == "1"]
     subscribed = [[item[2], item[1]] for item in emails]
     result = [";".join([item[0], item[1]]) for item in subscribed]
-
-    label = "Which customers have subscribed to the newsletter? \n"
-    ui.print_result(result, label)
     return result

@@ -48,18 +48,27 @@ def handle_menu():
     ui.print_menu("Accounting menu", options, "Back to main menu")
 
 
+def mod_conf(table, option):
+    if option == "3" or option == "4":
+        id_ = ui.get_inputs(["Please select the record to modify: "])[0]
+        if [x for x in table if x[0] == id_]:
+            conf = ui.get_inputs(["Insert (y) for modify: "], "Are you sure you want to modify this item?")[0]
+            if conf.lower() == "y":
+                if option == "3":
+                    remove(table, id_)
+                else:
+                    update(table, id_)
+        else:
+            ui.print_error_message("Invalid ID")
+
+
 def choose():
     option = ui.get_inputs(["Please enter a number: "])[0]
     table = data_manager.get_table_from_file("accounting/items.csv")
     global back_to_main
     if option == "1" or option == "3" or option == "4":
         show_table(table)
-        if option == "3":
-            id_ = ui.get_inputs(["Please select the record to delete: "])[0]
-            remove(table, id_)
-        elif option == "4":
-            id_ = ui.get_inputs(["Please select the record to update: "])[0]
-            update(table, id_)
+        mod_conf(table, option)
     elif option == "2":
         add(table)
     elif option == "5":

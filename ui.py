@@ -50,7 +50,7 @@ def print_result(result, label):
 
     if type(result) is dict:
         for key in result:
-            print("key: {0}; values:{1}".format(key, result[key]))
+            print("{0}: {1}".format(key, result[key]))
 
 
 # This function needs to generate outputs like this:

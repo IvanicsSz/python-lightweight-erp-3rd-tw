@@ -19,7 +19,6 @@ ui = SourceFileLoader("ui", current_file_path + "/../ui.py").load_module()
 data_manager = SourceFileLoader("data_manager", current_file_path + "/../data_manager.py").load_module()
 # common module
 common = SourceFileLoader("common", current_file_path + "/../common.py").load_module()
-back_to_main = 0
 
 # start this module by a module menu like the main menu
 # user need to go back to the main menu from here
@@ -28,14 +27,13 @@ back_to_main = 0
 
 
 def start_module():
-    global back_to_main
-    while not back_to_main:
+    while True:
         handle_menu()
         try:
-            choose()
+            if choose():
+                break
         except KeyError as err:
             ui.print_error_message(err)
-    back_to_main = 0
 
 
 def handle_menu():
@@ -49,26 +47,25 @@ def handle_menu():
 
 
 def mod_conf(table, option):
-    if option == "3" or option == "4":
-        id_ = ui.get_inputs(["Please select the record to modify: "])[0]
-        if [x for x in table if x[0] == id_]:
-            conf = ui.get_inputs(["Insert (y) for modify: "], "Are you sure you want to modify this item?")[0]
-            if conf.lower() == "y":
-                if option == "3":
-                    remove(table, id_)
-                else:
-                    update(table, id_)
-        else:
-            ui.print_error_message("Invalid ID")
+    id_ = ui.get_inputs(["Please select the record to modify: "])[0]
+    if [x for x in table if x[0] == id_]:
+        conf = ui.get_inputs(["Insert (y) for modify: "], "Are you sure you want to modify this item?")[0]
+        if conf.lower() == "y":
+            if option == "3":
+                remove(table, id_)
+            else:
+                update(table, id_)
+    else:
+        ui.print_error_message("Invalid ID")
 
 
 def choose():
     option = ui.get_inputs(["Please enter a number: "])[0]
     table = data_manager.get_table_from_file("accounting/items.csv")
-    global back_to_main
     if option == "1" or option == "3" or option == "4":
         show_table(table)
-        mod_conf(table, option)
+        if option != "1":
+            mod_conf(table, option)
     elif option == "2":
         add(table)
     elif option == "5":
@@ -77,7 +74,7 @@ def choose():
         year = ui.get_inputs(["Please insert the year: "])[0]
         ui.print_result(str(avg_amount(table, int(year))), "Average profit per item in given year: ")
     elif option == "0":
-        back_to_main = 1
+        return "exit"
     else:
         raise KeyError("There is no such option.")
 

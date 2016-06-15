@@ -17,20 +17,20 @@ data_manager = SourceFileLoader("data_manager", current_file_path + "/../data_ma
 # common module
 common = SourceFileLoader("common", current_file_path + "/../common.py").load_module()
 
-#table = data_manager.get_table_from_file('/home/eszter/codecool/6_TW_week/python-lightweight-erp-3rd-tw/crm/customers.csv')
 
 # start this module by a module menu like the main menu
 # user need to go back to the main menu from here
 # we need to reach the default and the special functions of this module from the module menu
 def handle_menu():
-    options = ["Show table",
-                "Add a new record",
-                "Remove a record",
-                "Update records",
+    options = ["Show customer records",
+                "Add new customer record",
+                "Remove customer record",
+                "Update customer record",
                 "ID of the customer with the longest name",
-                "E-mail subscriptions"]
+                "Newsletter subscriptions"]
 
-    ui.print_menu("Customer Relationship Management [menu] \n", options, "Exit program \n")
+    ui.print_menu("Customer Relationship Management [menu] \n", options, "Back to main menu \n")
+
 
 def choose():
     inputs = ui.get_inputs(["Please enter a number: "], "\n")
@@ -41,17 +41,17 @@ def choose():
         show_table(table)
         if option == "3":
             id_ = ""
-            while id_ not in [item[0] for item in table]:
+            while id_ not in [item[0] for item in table] and id_ != "q":
                 if id_ != "":
                     ui.print_error_message("ID given does not exist")
-                id_ = ui.get_inputs(["Enter your ID: "], "")[0]
+                id_ = ui.get_inputs(["Enter your ID or press 'q' to exit: "], "")[0]
             remove(table, id_)
         elif option == "4":
             id_ = ""
-            while id_ not in [item[0] for item in table]:
+            while id_ not in [item[0] for item in table] and id_ != "q":
                 if id_ != "":
                     ui.print_error_message("ID given does not exist")
-                id_ = ui.get_inputs(["Enter your ID: "], "")[0]
+                id_ = ui.get_inputs(["Enter your ID or press 'q' to exit: "], "")[0]
             update(table, id_)
     elif option == "2":
         add(table)
@@ -63,7 +63,6 @@ def choose():
         return "main"
     else:
         raise KeyError("There is no such option.")
-
 
 
 def start_module():
@@ -93,8 +92,7 @@ def show_table(table):
 
 def add(table):
     show_table(table)
-
-    new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Add a new record to the table")
+    new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Add a new record to the table \n")
     table = common.adding(table, new_record)
 
     # new_id = common.generate_random(table)
@@ -132,9 +130,8 @@ def update(table, id_):
 
     for line in table:
         if id_ in line:
-            line[1:] = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table")
+            line[1:] = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table \n")
 
-# line[1:] = ui.get_inputs(["Enter your name: ", "Enter your e-mail address", "Subscription (0/1 = no/yes): "], "Update an existing record in the table") for line in table if id_ in line]
     data_manager.write_table_to_file("crm/customers.csv", table)
     return table
 
@@ -149,7 +146,7 @@ def get_longest_name_id(table):
     list_names = [item[1] for item in table if len(item[1]) == name_max]
     list_sort = common.sorting(list_names)
 
-    label = "What is the id of the customer with the longest name?"
+    label = "What is the id of the customer with the longest name? \n"
     ui.print_result([item[0] for item in table if item[1] == list_sort[0]][0], label)
     return [item[0] for item in table if item[1] == list_sort[0]][0]
 
@@ -157,9 +154,9 @@ def get_longest_name_id(table):
 # the question: Which customers has subscribed to the newsletter?
 # return type: list of string (where string is like email+separator+name, separator=";")
 def get_subscribed_emails(table):
-    emails = [item for item in table if item[3] == '1']
+    emails = [item for item in table if item[3] == "1"]
     subscribed = [[item[2], item[1]] for item in emails]
-    result = [';'.join([item[0], item[1]]) for item in subscribed]
+    result = [";".join([item[0], item[1]]) for item in subscribed]
 
     label = "Which customers have subscribed to the newsletter? \n"
     ui.print_result(result, label)

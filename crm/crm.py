@@ -92,7 +92,12 @@ def show_table(table):
 
 def add(table):
     show_table(table)
-    new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Add a new record to the table \n")
+    new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Want to subscribe? yes/no: "], "Add a new record to the table \n")
+    for answer in new_record:
+        if answer == "yes":
+            new_record[2] = "1"
+        elif answer == "no":
+            new_record[2] = "0"
     table = common.adding(table, new_record)
 
     # new_id = common.generate_random(table)

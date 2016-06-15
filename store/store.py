@@ -64,11 +64,10 @@ def get_counts_by_manufacturers(table):
     manufacturers_dict = {row[2]: set() for row in table}  # key: manufacturer, value: set of game types
     for manuf in manufacturers_dict:  # for each manufacturer
         for i in range(len(table)):  # check each record
-            if manuf == table[i][2]: #  if the record has the manufacturer we are looking for
+            if manuf == table[i][2]:  # if the record has the manufacturer we are looking for
                 manufacturers_dict[manuf].add(table[i][1])  # add the game title to the set of that manufacturer
         manufacturers_dict[manuf] = len(manufacturers_dict[manuf])  # when all the types are added, find its length
     return manufacturers_dict
-
 
 
 # the question: What is the average amount of games in stock of a given manufacturer?

@@ -23,11 +23,11 @@ common = SourceFileLoader("common", current_file_path + "/../common.py").load_mo
 # we need to reach the default and the special functions of this module from the module menu
 def handle_menu():
     options = ["Show customer records",
-                "Add new customer record",
-                "Remove customer record",
-                "Update customer record",
-                "ID of the customer with the longest name",
-                "Newsletter subscriptions"]
+               "Add new customer record",
+               "Remove customer record",
+               "Update customer record",
+               "ID of the customer with the longest name",
+               "Newsletter subscriptions"]
 
     ui.print_menu("Customer Relationship Management [menu] \n", options, "Back to main menu \n")
 
@@ -56,9 +56,11 @@ def choose():
     elif option == "2":
         add(table)
     elif option == "5":
-        get_longest_name_id(table)
+        label = "What is the id of the customer with the longest name? \n"
+        ui.print_result(get_longest_name_id(table), label)
     elif option == "6":
-        get_subscribed_emails(table)
+        label = "Which customers have subscribed to the newsletter? \n"
+        ui.print_result(get_subscribed_emails(table), label)
     elif option == "0":
         return "main"
     else:
@@ -92,7 +94,10 @@ def show_table(table):
 
 def add(table):
     show_table(table)
-    new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Want to subscribe? yes/no: "], "Add a new record to the table \n")
+    new_record = ui.get_inputs(["Enter your name: ",
+                                "Enter your e-mail address: ",
+                                "Want to subscribe? yes/no: "],
+                               "Add a new record to the table \n")
     for answer in new_record:
         if answer == "yes":
             new_record[2] = "1"
@@ -129,13 +134,12 @@ def remove(table, id_):
 # @table: list of lists
 # @id_: string
 def update(table, id_):
-    # new_record = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table")
-    # record = next(item for item in table if item[0] == id_)
-    # record = (item for item in table if item[0] == id_)[0]
-
     for line in table:
         if id_ in line:
-            line[1:] = ui.get_inputs(["Enter your name: ", "Enter your e-mail address: ", "Subscription (0/1 = no/yes): "], "Update an existing record in the table \n")
+            line[1:] = ui.get_inputs(["Enter your name: ",
+                                      "Enter your e-mail address: ",
+                                      "Subscription (0/1 = no/yes): "],
+                                     "Update an existing record in the table \n")
 
     data_manager.write_table_to_file("crm/customers.csv", table)
     return table
@@ -150,9 +154,6 @@ def get_longest_name_id(table):
     name_max = max([len(item[1]) for item in table])
     list_names = [item[1] for item in table if len(item[1]) == name_max]
     list_sort = common.sorting(list_names)
-
-    label = "What is the id of the customer with the longest name? \n"
-    ui.print_result([item[0] for item in table if item[1] == list_sort[0]][0], label)
     return [item[0] for item in table if item[1] == list_sort[0]][0]
 
 
@@ -162,7 +163,4 @@ def get_subscribed_emails(table):
     emails = [item for item in table if item[3] == "1"]
     subscribed = [[item[2], item[1]] for item in emails]
     result = [";".join([item[0], item[1]]) for item in subscribed]
-
-    label = "Which customers have subscribed to the newsletter? \n"
-    ui.print_result(result, label)
     return result

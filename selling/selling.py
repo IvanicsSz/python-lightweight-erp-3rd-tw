@@ -42,8 +42,8 @@ def handle_menu():
                "Add record to selling table",
                "Remove record from selling table",
                "Update record in selling table",
-               "Items are sold between dates",
-               "Id of the item that sold for the lowest price"]
+               "Id of the item that sold for the lowest price",
+               "Items are sold between dates"]
 
     ui.print_menu("Selling menu", options, "Back to Main Menu")
 
@@ -129,5 +129,5 @@ def get_lowest_price_item_id(table):
 # the question: Which items are sold between two given dates ? (from_date < birth_date < to_date)
 # return type: list of lists (the filtered table)
 def get_items_sold_between(table, fm, fd, fy, tm, td, ty):
-    res = [x for x in table if int(fy + fm + fd) < int(x[5] + x[3] + x[4]) < int(ty + tm + td)]
+    res = [x for x in table if str(fy) + str(fm) + str(fd) < x[5] + x[3] + x[4] < str(ty) + str(tm) + str(td)]
     return [[x[0], x[1], int(x[2]), int(x[3]), int(x[4]), int(x[5])] for x in res]
